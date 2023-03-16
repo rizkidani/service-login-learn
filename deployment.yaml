@@ -1,0 +1,25 @@
+apiVersion: apps/v1
+kind: Deployment # Kubernetes resource kind we are creating
+metadata:
+  name: login-deployment
+spec:
+  selector:
+    matchLabels:
+      app: login-service
+  replicas: 2 # Number of replicas that will be created for this deployment
+  template:
+    metadata:
+      labels:
+        app: login-service
+    spec:
+      containers:
+        - name: login-container
+          image: login-image:1.0
+          # Image that will be used to containers in the cluster
+          imagePullPolicy: IfNotPresent
+#          env:
+#            - name: SPRING_PROFILES_ACTIVE
+#              value: "docker"
+          ports:
+            - containerPort: 8888
+# The port that the container is running on in the cluster
